@@ -6,13 +6,56 @@
     android:layout_height="match_parent"
     tools:context="me.shantnu.morselight.MainActivity">
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="495dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/text_hint"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="85dp"
+            tools:layout_editor_absoluteY="56dp" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="121dp"
+            android:layout_height="67dp"
+            android:layout_weight="1"
+            android:onClick="parseText"
+            android:text="@string/button_text"
+            tools:layout_editor_absoluteX="132dp"
+            tools:layout_editor_absoluteY="135dp"
+            tools:text="@string/button_text" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="199dp"
+            android:layout_height="170dp"
+            android:layout_weight="1"
+            android:text="Text"
+            android:textAlignment="center"
+            android:textSize="72sp"
+            tools:layout_editor_absoluteX="93dp"
+            tools:layout_editor_absoluteY="266dp" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="sosTest"
+            android:text="@string/button_test"
+            tools:layout_editor_absoluteX="157dp"
+            tools:layout_editor_absoluteY="447dp" />
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
