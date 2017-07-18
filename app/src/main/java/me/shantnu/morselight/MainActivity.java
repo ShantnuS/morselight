@@ -1,22 +1,17 @@
 package me.shantnu.morselight;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /*
 * MorseLight
@@ -45,9 +40,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    /*
+    //Might be useful later...
     public void setTimeUnit(int timeUnit){
         this.timeUnit = timeUnit;
     }
+    */
 
     public void oneUnitSleep(){
         try{
@@ -118,32 +116,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void sosTest(View view){
-        /*This was a test of the dot and dash methods being called consecutively
-        * It is not very efficient as it runs on the main thread, and therefore
-        * can cause the device to lag and skip frames. Hence, the parseView method
-        * was called from within a seperate thread.
-        */
-
-        dot();
-        dot();
-        dot();
-
-        threeUnitSleep();
-
-        dash();
-        dash();
-        dash();
-
-        threeUnitSleep();
-
-        dot();
-        dot();
-        dot();
-    }
-
     public void buttonAction(View view){
-        /* This had to be run on a seperate thread because of the skipped frames caused by running
+        /* This had to be run on a separate thread because of the skipped frames caused by running
         * on the main thread, which was a problem since the text view didn't update.
         */
 
@@ -181,10 +155,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run(){
                 Context context = getApplicationContext();
-                CharSequence text = message;
                 int duration = Toast.LENGTH_SHORT;
 
-                Toast toast = Toast.makeText(context, text, duration);
+                Toast toast = Toast.makeText(context, message, duration);
                 toast.show();
             }
         });
@@ -482,4 +455,32 @@ public class MainActivity extends AppCompatActivity {
         }
         addMorseCode(" ");
     }
+
+    /*
+    public void sosTest(View view){
+
+        //This was a test of the dot and dash methods being called consecutively
+        //It is not very efficient as it runs on the main thread, and therefore
+        //can cause the device to lag and skip frames. Hence, the parseView method
+        //was called from within a separate thread.
+
+
+        dot();
+        dot();
+        dot();
+
+        threeUnitSleep();
+
+        dash();
+        dash();
+        dash();
+
+        threeUnitSleep();
+
+        dot();
+        dot();
+        dot();
+
+    }
+    */
 }
