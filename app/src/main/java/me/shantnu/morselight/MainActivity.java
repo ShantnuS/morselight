@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (!hasFlash){
             System.err.println("Camera does not have a flash!");
+            displayToast("Could not find flash!");
             finish();
             System.exit(0);
         }
