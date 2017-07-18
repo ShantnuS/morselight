@@ -1,8 +1,10 @@
 package me.shantnu.morselight;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

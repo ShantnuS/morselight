@@ -8,6 +8,7 @@
     tools:context="me.shantnu.morselight.MainActivity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="495dp"
@@ -41,6 +42,8 @@
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="64dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
             android:layout_weight="0.07"
             android:background="@android:color/holo_orange_light"
             android:gravity="center"
