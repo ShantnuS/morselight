@@ -1,8 +1,11 @@
 package me.shantnu.morselight;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,17 +30,28 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        boolean hasFlash = this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+        //boolean hasFlash = this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
 
+        /*
         if (!hasFlash){
             System.err.println("Camera does not have a flash!");
             displayToast("Could not find flash!");
             finish();
             System.exit(0);
         }
+        */
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        requestPermission();
+    }
+
+    public void requestPermission(){
+        System.err.println("Requesting camera permission");
+        Context context = getApplicationContext();
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED){
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, 100);
+        }
     }
 
     /*
@@ -120,12 +134,18 @@ public class MainActivity extends AppCompatActivity {
         /* This had to be run on a separate thread because of the skipped frames caused by running
         * on the main thread, which was a problem since the text view didn't update.
         */
+        requestPermission();
 
         new Thread() {
             public void run() {
                 if(!isRunning) {
-                    isRunning = true;
-                    parseText();
+                    if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED){
+                        displayToast("Camera permission was not granted!");
+                    }
+                    else{
+                        isRunning = true;
+                        parseText();
+                    }
                 }
                 else{
                     displayToast("Already Running!");
