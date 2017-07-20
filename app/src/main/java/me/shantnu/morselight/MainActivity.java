@@ -2,10 +2,12 @@ package me.shantnu.morselight;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +20,7 @@ import java.util.Arrays;
 
 /*
 * MorseLight
-* Version 1.0
+* Version 1.2
 * Created by Shantnu Singh on 11/07/2017
 */
 
@@ -30,19 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //boolean hasFlash = this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
-
-        /*
-        if (!hasFlash){
-            System.err.println("Camera does not have a flash!");
-            displayToast("Could not find flash!");
-            finish();
-            System.exit(0);
-        }
-        */
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        checkFlashAvailable();
         requestPermission();
     }
 
@@ -54,6 +46,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void checkFlashAvailable(){
+        Boolean isFlashAvailable = getApplicationContext().getPackageManager()
+                .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+
+        if (!isFlashAvailable) {
+
+            AlertDialog alert = new AlertDialog.Builder(MainActivity.this).create();
+            alert.setTitle("Compatiblilty Error!");
+            alert.setMessage("Your device doesn't support flash light!");
+            alert.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // closing the application
+                    finish();
+                    System.exit(0);
+                }
+            });
+            alert.show();
+        }
+    }
     /*
     //Might be useful later...
     public void setTimeUnit(int timeUnit){
@@ -129,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
         oneUnitSleep();
 
     }
+
 
     public void buttonAction(View view){
         /* This had to be run on a separate thread because of the skipped frames caused by running
