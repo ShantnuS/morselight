@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         checkFlashAvailable();
         requestPermission();
-    }
+    } //Do this on create...
 
     public void requestPermission(){
         System.err.println("Requesting camera permission");
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED){
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, 100);
         }
-    }
+    } //Request camera access permission
 
     public void checkFlashAvailable(){
         Boolean isFlashAvailable = getApplicationContext().getPackageManager()
@@ -70,14 +70,7 @@ public class MainActivity extends AppCompatActivity {
         else{
             System.err.println("Flash is available!");
         }
-    }
-
-    /*
-    //Might be useful later...
-    public void setTimeUnit(int timeUnit){
-        this.timeUnit = timeUnit;
-    }
-    */
+    } //Check if device has a flashlight
 
     public void oneUnitSleep(){
         try{
@@ -87,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             displayToast("Could not sleep!");
         }
-    }
+    } //Sleep for one time unit
 
     public void threeUnitSleep(){
         //a three unit sleep is needed after each letter.
@@ -99,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         catch (Exception e){
             e.printStackTrace();
         }
-    }
+    } //Sleep for 3 time units
 
     public void sevenUnitSleep(){
         //A seven unit sleep is needed after each word. I.e. a space = 7 unit sleep.
@@ -111,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         catch (Exception e){
             e.printStackTrace();
         }
-    }
+    } //Sleep for 7 time units
 
     public void dot(){
         //The duration of a dot should be equal to 1 time unit
@@ -129,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
         oneUnitSleep();
 
-    }
+    } //Turn on/off flashlight for DOT
 
     public void dash(){
         //The duration of a dash is equivalent to 3 time units.
@@ -147,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
         oneUnitSleep();
 
-    }
+    } //Turn on/off flashlight for DASH
 
     public void buttonAction(View view){
         /* This had to be run on a separate thread because of the skipped frames caused by running
@@ -172,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }.start();
-    }
+    } //Called when button is pressed
 
     public void parseText() {
 
@@ -188,14 +181,14 @@ public class MainActivity extends AppCompatActivity {
 
         setTextViewText("Done!");
         isRunning = false;
-    }
+    } //Pass text from the field to morseIt one at a time
 
     public void hideKeyboard(View view){
         if (view != null) {
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
-    }
+    } //Hide the soft-keyboard
 
     public void displayToast(final String message){
         runOnUiThread(new Runnable(){
@@ -208,13 +201,13 @@ public class MainActivity extends AppCompatActivity {
                 toast.show();
             }
         });
-    }
+    } //Display a toast message on screen
 
     public String getEditTextString(){
         //returns the text from the text field "editText"...
         EditText editText = (EditText) findViewById(R.id.editText);
         return editText.getText().toString();
-    }
+    } //Get the string from the text-field
 
     public void setTextViewText(final String text) {
         runOnUiThread(new Runnable(){
@@ -225,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
                 textview.setText(text);
             }
         });
-    }
+    } //Set the view on the bottom text view
 
     public void addMorseCode(final String code) {
         runOnUiThread(new Runnable(){
@@ -236,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
                 textview.append(code);
             }
         });
-    }
+    } //Append text on the morse code text view
 
     public void clearMorseCode(){
         runOnUiThread(new Runnable(){
@@ -247,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
                 textview.setText("");
             }
         });
-    }
+    } //Clear the morse code text view
 
     public void morseIt(String letter) {
 
@@ -501,7 +494,18 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         addMorseCode(" ");
+    } //Call sequence of DOT/DASH depending on the letter
+
+}
+
+// ********** LEGACY CODE **********
+
+    /*
+    //Might be useful later...
+    public void setTimeUnit(int timeUnit){
+        this.timeUnit = timeUnit;
     }
+    */
 
     /*
     public void sosTest(View view){
@@ -530,4 +534,3 @@ public class MainActivity extends AppCompatActivity {
 
     }
     */
-}
