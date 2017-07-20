@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
+import android.hardware.Camera.Parameters;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -17,12 +19,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /*
 * MorseLight
-* Version 1.2
+* Version 1.3
 * Created by Shantnu Singh on 11/07/2017
 */
 
@@ -31,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     //Global variables
     private int timeUnit = 300;
     private boolean isRunning = false;
+    Camera cam;
+    Parameters p;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,9 +113,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void dot(){
         //The duration of a dot should be equal to 1 time unit
-        Camera cam = Camera.open();
-        Camera.Parameters p = cam.getParameters();
-        p.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        cam = Camera.open();
+
+        try{
+            cam.setPreviewTexture(new SurfaceTexture(0));
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+        p = cam.getParameters();
+        p.setFlashMode(Parameters.FLASH_MODE_TORCH);
         cam.setParameters(p);
         cam.startPreview();
 
@@ -126,9 +138,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void dash(){
         //The duration of a dash is equivalent to 3 time units.
-        Camera cam = Camera.open();
-        Camera.Parameters p = cam.getParameters();
-        p.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        cam = Camera.open();
+
+        try{
+            cam.setPreviewTexture(new SurfaceTexture(0));
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+        Parameters p = cam.getParameters();
+        p.setFlashMode(Parameters.FLASH_MODE_TORCH);
         cam.setParameters(p);
         cam.startPreview();
 
