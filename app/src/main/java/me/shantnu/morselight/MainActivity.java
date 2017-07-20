@@ -3,6 +3,7 @@ package me.shantnu.morselight;
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.support.v4.app.ActivityCompat;
@@ -11,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         checkFlashAvailable();
         requestPermission();
     }
@@ -64,7 +67,11 @@ public class MainActivity extends AppCompatActivity {
             });
             alert.show();
         }
+        else{
+            System.err.println("Flash is available!");
+        }
     }
+
     /*
     //Might be useful later...
     public void setTimeUnit(int timeUnit){
@@ -78,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         }
         catch (Exception e){
             e.printStackTrace();
+            displayToast("Could not sleep!");
         }
     }
 
@@ -115,7 +123,8 @@ public class MainActivity extends AppCompatActivity {
 
         oneUnitSleep();
         addMorseCode(".");
-        cam.stopPreview();
+
+        //cam.stopPreview();
         cam.release();
 
         oneUnitSleep();
@@ -124,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void dash(){
         //The duration of a dash is equivalent to 3 time units.
-
         Camera cam = Camera.open();
         Camera.Parameters p = cam.getParameters();
         p.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
@@ -134,19 +142,19 @@ public class MainActivity extends AppCompatActivity {
         addMorseCode("-");
         threeUnitSleep();
 
-        cam.stopPreview();
+        //cam.stopPreview();
         cam.release();
 
         oneUnitSleep();
 
     }
 
-
     public void buttonAction(View view){
         /* This had to be run on a separate thread because of the skipped frames caused by running
         * on the main thread, which was a problem since the text view didn't update.
         */
         requestPermission();
+        hideKeyboard(view);
 
         new Thread() {
             public void run() {
@@ -180,6 +188,13 @@ public class MainActivity extends AppCompatActivity {
 
         setTextViewText("Done!");
         isRunning = false;
+    }
+
+    public void hideKeyboard(View view){
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     public void displayToast(final String message){
